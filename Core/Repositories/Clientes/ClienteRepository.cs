@@ -57,6 +57,15 @@ public class ClienteRepository : IClienteRepository
         return _context.Clientes.AsNoTracking().Include(c => c.Dividas).OrderByDescending(c => c.Dividas.Max(d => d.Valor)).ToList();
     }
 
+    // public PagedResult<Cliente> FindAllComPaginacao(PaginationOptions options)
+    // {
+    //     var totalElements = _context.Clientes.Count();
+    //     var items = _context.Clientes
+    //         .Skip((options.PageNumber - 1) * options.PageSize)
+    //         .Take(options.PageSize).ToList();
+    //     return new PagedResult<Cliente>(items, options.PageNumber, options.PageSize, totalElements);
+    // }
+
     public ICollection<Cliente> FindAllComDividaEmAberto()
     {
         List<Cliente> clientes = 

@@ -1,6 +1,7 @@
 using System.Text.Json;
 using Api.Common.DTOs;
 using Core.Exceptions;
+using FluentValidation;
 
 namespace Core.Middlewares;
 
@@ -27,7 +28,27 @@ public class ExceptionHandlerMiddleware
         {
             await HandleDividaEmAbertoExceptionAsync(context, e);
         }
+        catch (ValidationException e)
+        {
+            await HandleValidationException(context, e);
+        }
         
+    }
+
+    private Task HandleValidationException(HttpContext context, ValidationException e)
+    {
+        var body = new ValidationErrorResponse
+        {
+            Status = 400,
+            Error = "Bad Request",
+            Cause = e.GetType().Name,
+            Message = "Validation Error",
+            Timestamp = DateTime.Now,
+            Errors = e.Errors.GroupBy(vf => vf.PropertyName).ToDictionary(g => g.Key, g => g.Select(vf => vf.ErrorMessage).ToArray())
+        };
+        context.Response.StatusCode = body.Status;
+        context.Response.ContentType = "application/json";
+        return context.Response.WriteAsync(JsonSerializer.Serialize(body));
     }
 
     private Task HandleDividaEmAbertoExceptionAsync(HttpContext context, DividaEmAbertoException e)

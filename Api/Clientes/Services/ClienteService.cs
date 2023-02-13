@@ -1,6 +1,9 @@
+using Api.Clientes.Mappers;
+using Api.Common.DTOs;
 using Api.DTOs;
 using Core.Exceptions;
 using Core.Models;
+using Core.Repositories;
 using Core.Repositories.Clientes;
 using FluentValidation;
 
@@ -20,10 +23,6 @@ public class ClienteService : IClienteService
     public Cliente Create(Cliente cliente)
     {
         _clienteValidator.ValidateAndThrow(cliente);
-        // if (!_clienteRepository.ValidaCpf(cliente.Cpf))
-        // {
-        //     throw new CpfInvalidoException($"O CPF {cliente.Cpf} do cliente é inválido.");
-        // }
         return _clienteRepository.Create(cliente);
     }
 
@@ -40,6 +39,13 @@ public class ClienteService : IClienteService
     {
         return _clienteRepository.FindAll();
     }
+
+    // public PagedResponse<Cliente> FindAllComPaginacao(int pageNumber, int pageSize)
+    // {
+    //     var paginationOption = new PaginationOptions(pageNumber, pageSize);
+    //     var pagedResult = _clienteRepository.FindAllComPaginacao(paginationOption);
+    //     return _clienteMapper.ToPagedResponse(pagedResult);
+    // }
 
     public ICollection<Cliente> FindAllComDividaEmAberto()
     {

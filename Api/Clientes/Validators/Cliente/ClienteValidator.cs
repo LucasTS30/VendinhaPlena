@@ -9,7 +9,8 @@ public class ClienteValidator : AbstractValidator<Cliente>
     {
         RuleFor(c => c.NomeCompleto).NotEmpty();
         RuleFor(c => c.Cpf).Must(IsCpf);
-        RuleFor(c => c.DataNascimento).Must(BeAValidDateAndNotFuture).NotEmpty();
+        RuleFor(c => c.DataNascimento).NotEmpty().Must(BeAValidDateAndNotFuture);
+		RuleFor(c => c.Email).NotEmpty();
     }
 
     private bool BeAValidDateAndNotFuture(DateTime date)

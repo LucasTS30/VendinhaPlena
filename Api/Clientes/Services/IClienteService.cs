@@ -1,3 +1,4 @@
+using Api.Common.DTOs;
 using Api.DTOs;
 using Core.Models;
 
@@ -15,4 +16,5 @@ public interface IClienteService
     ICollection<ClienteComIdadeDTO> FindByName(string name);
     ICollection<Cliente> FindAllComDividaEmAberto();
     double SomaDasDividasPorClienteById(int id);
+    //PagedResponse<Cliente> FindAllComPaginacao(int pageNumber, int pageSize);
 }
