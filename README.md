@@ -1,5 +1,6 @@
 # VendinhaPlena
 Criação de uma API que forneça serviços para controle de dívidas dos clientes de uma vendinha.
+
 Para a criação da API foi utilizado ASP .NET Core, juntamente com Entity Framework Core para fazer as operações com banco de dados SQL Server.
 
 A execução do projeto pode ser feita da seguinte maneira:
